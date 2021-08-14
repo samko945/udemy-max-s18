@@ -1,9 +1,10 @@
-import { createStore } from "redux";
-import { createSlice } from "@reduxjs/toolkit";
+// import { createStore } from "redux"; is used when you only have one slice-reducer.
+// configureStore can be used for single or multiple slices
+import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialState = { counter: 0, showCounter: true };
 
-createSlice({
+const counterSlice = createSlice({
 	name: "counter", // every slice needs an id
 	initialState,
 	reducers: {
@@ -24,44 +25,9 @@ createSlice({
 	},
 });
 
-const counterReducer = (state = initialState, action) => {
-	/* 
-    Don't mutate state, always overwrite it by returning new state.
-    Wrong -> state.counter++; return state;
-    Correct -> return counter: state.counter++;
-  */
-
-	if (action.type === "increment") {
-		return {
-			...state,
-			counter: state.counter + 1,
-		};
-	}
-
-	if (action.type === "increase") {
-		return {
-			...state,
-			counter: state.counter + action.amount,
-		};
-	}
-
-	if (action.type === "decrement") {
-		return {
-			...state,
-			counter: state.counter - 1,
-		};
-	}
-
-	if (action.type === "toggle") {
-		return {
-			...state,
-			showCounter: !state.showCounter,
-		};
-	}
-
-	return state;
-};
-
-const store = createStore(counterReducer);
+// reducer: {counter: counterSlice.reducer, ..} -> for multiple slice-reducers
+const store = configureStore({
+	reducer: counterSlice.reducer,
+});
 
 export default store;
