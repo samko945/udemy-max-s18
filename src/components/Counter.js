@@ -11,8 +11,8 @@ const Counter = () => {
 	// the useDispatch hook returns a dispatch function for actions.
 	const dispatch = useDispatch();
 	// useSelector automatically subscribes this component to the store, and will rerender on state change.
-	const counter = useSelector((state) => state.counter);
-	const showCounter = useSelector((state) => state.showCounter);
+	const counter = useSelector((state) => state.counter.counter);
+	const showCounter = useSelector((state) => state.counter.showCounter);
 
 	const incrementHandler = () => {
 		dispatch(counterActions.increment());
