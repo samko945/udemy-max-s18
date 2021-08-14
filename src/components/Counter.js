@@ -1,6 +1,7 @@
 // for class based components
 // import { Component } from "react";
 // import { connect } from "react-redux"
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import classes from "./Counter.module.css";
@@ -10,6 +11,7 @@ const Counter = () => {
 	const dispatch = useDispatch();
 	// useSelector automatically subscribes this component to the store, and will rerender on state change.
 	const counter = useSelector((state) => state.counter);
+	const showCounter = useSelector((state) => state.showCounter);
 
 	const incrementHandler = () => {
 		dispatch({ type: "increment" });
@@ -23,17 +25,23 @@ const Counter = () => {
 		dispatch({ type: "increase", amount: 5 });
 	};
 
-	const toggleCounterHandler = () => {};
+	const toggleCounterHandler = () => {
+		dispatch({ type: "toggle" });
+	};
 
 	return (
 		<main className={classes.counter}>
-			<h1>Redux Counter</h1>
-			<div className={classes.value}>{counter}</div>
-			<div>
-				<button onClick={incrementHandler}>Increment</button>
-				<button onClick={increaseHandler}>Increase by 5</button>
-				<button onClick={decrementHandler}>Decrement</button>
-			</div>
+			{showCounter && (
+				<React.Fragment>
+					<h1>Redux Counter</h1>
+					<div className={classes.value}>{counter}</div>
+					<div>
+						<button onClick={incrementHandler}>Increment</button>
+						<button onClick={increaseHandler}>Increase by 5</button>
+						<button onClick={decrementHandler}>Decrement</button>
+					</div>
+				</React.Fragment>
+			)}
 			<button onClick={toggleCounterHandler}>Toggle Counter</button>
 		</main>
 	);
