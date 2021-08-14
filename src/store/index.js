@@ -17,7 +17,7 @@ const counterSlice = createSlice({
 			state.counter--;
 		},
 		increase(state, action) {
-			state.counter = state.counter + action.amount;
+			state.counter = state.counter + action.payload;
 		},
 		toggleCounter(state) {
 			state.showCounter = !state.showCounter;
@@ -29,5 +29,12 @@ const counterSlice = createSlice({
 const store = configureStore({
 	reducer: counterSlice.reducer,
 });
+
+/*
+  We dispatch actions by using the slice's "actions" property which is the endpoint for our reducers
+  counterSlice.actions.toggleCounter() -> dispatches the toggleCounter action
+*/
+// export slice actions to be used in a component.
+export const counterActions = counterSlice.actions;
 
 export default store;
